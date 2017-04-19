@@ -24,11 +24,13 @@ try {
 
 // 格納したPOSTされた配列を一つずつ取り出す
 foreach ($events as $event) {
+  /*
   // PostbackEventの取得
   if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
     replyTextMessage($bot, $event->getReplyToken(), "Postback受信「" . $event->getPostbackData() . "」");
     continue;
   }
+  */
 
   // 取り出したものにMessageEventがなかったらログを吐き処理をスキップ
   if (!($event instanceof \LINE\LINEBot\Event\MessageEvent)) {
@@ -90,16 +92,14 @@ foreach ($events as $event) {
   );
   */
   // Confirmのテンプレートを返す
-  replyConfirmTemplate($bot,
+  replyConfirmTemplate(
+    $bot,
     $event->getReplyToken(),
     "Webで詳しく見ますか？",
     "Webで詳しく見ますか？",
-    new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-      "見る", "http://google.jp"),
-    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
-      "見ない", "ignore"),
-    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
-      "非表示", "never")
+    new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder ("見る", "http://google.jp"),
+    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ("見ない", "ignore"),
+    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ("非表示", "never")
   );
 
 }
