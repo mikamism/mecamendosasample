@@ -52,8 +52,17 @@ foreach ($events as $event) {
   replyTextMessage($bot, $event->getReplyToken(), "TextMessage");
 }
 
+// テキストの送信を行う
 function replyTextMessage($bot, $replyToken, $text) {
   $response = $bot->replyMessage($replyToken, new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text));
+  if (!$response->isSucceeded()) {
+    error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
+  }
+}
+
+// 画像の送信を行う
+function replyImageMessage($bot, $replyToken, $originalImageUrl, $previewImageUrl) {
+  $response = $bot->replyMessage($replyToken, new \LINE\LINEBot\MessageBuilder\ImageMessageBuilder($originalImageUrl, $previewImageUrl));
   if (!$response->isSucceeded()) {
     error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
   }
