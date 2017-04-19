@@ -56,7 +56,14 @@ foreach ($events as $event) {
   // 位置情報を返す
   //replyLocationMessage($bot, $event->getReplyToken(), "エイベックス", "東京都港区六本木1-6-1 泉ガーデンタワー38F", 35.66460959999999, 139.73950260000004);
   // スタンプを返す(https://devdocs.line.me/files/sticker_list.pdf)
-  replyStickerMessage($bot, $event->getReplyToken(), 1, 1);
+  //replyStickerMessage($bot, $event->getReplyToken(), 1, 1);
+  // 複数のメッセージを返す
+  replyMultiMessage($bot, $event->getReplyToken(),
+    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder("TextMessage"),
+    new \LINE\LINEBot\MessageBuilder\ImageMessageBuilder("https://" . $_SERVER["HTTP_HOST"] . "/imgs/original.jpg", "https://" . $_SERVER["HTTP_HOST"] . "/imgs/preview.jpg"),
+    new \LINE\LINEBot\MessageBuilder\LocationMessageBuilder("エイベックス", "東京都港区六本木1-6-1 泉ガーデンタワー38F", 35.66460959999999, 139.73950260000004),
+    new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder(109, 1)
+  );
 
 }
 
@@ -87,6 +94,18 @@ function replyLocationMessage($bot, $replyToken, $title, $address, $lat, $lon) {
 // スタンプを送信する
 function replyStickerMessage($bot, $replyToken, $packageId, $stickerId) {
   $response = $bot->replyMessage($replyToken, new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder($packageId, $stickerId));
+  if (!$response->isSucceeded()) {
+    error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
+  }
+}
+
+//
+function replyMultiMessage($bot, $replyToken, ...$msgs) {
+  $builder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
+  foreach($msgs as $value) {
+    $builder->add($value);
+  }
+  $response = $bot->replyMessage($replyToken, $builder);
   if (!$response->isSucceeded()) {
     error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
   }
