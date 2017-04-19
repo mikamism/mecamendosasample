@@ -34,7 +34,6 @@ foreach ($events as $event) {
     error_log('Non text message has come');
     continue;
   }
-
   /*
   // ReplyTokenへ取得したテキストを返す
   //$bot->replyText($event->getReplyToken(), $event->getText());
@@ -50,14 +49,13 @@ foreach ($events as $event) {
       ->add(new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder(1, 114))
   );
   */
-
   replyTextMessage($bot, $event->getReplyToken(), "TextMessage");
+}
 
-  function replyTextMessage($bot, $replyToken, $text) {
-    $response = $bot->replyMessage($replyToken, new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text));
-    if (!$response->isSucceeded()) {
-      error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
-    }
+function replyTextMessage($bot, $replyToken, $text) {
+  $response = $bot->replyMessage($replyToken, new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text));
+  if (!$response->isSucceeded()) {
+    error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
   }
 }
 
