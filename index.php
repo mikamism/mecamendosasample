@@ -49,8 +49,12 @@ foreach ($events as $event) {
       ->add(new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder(1, 114))
   );
   */
+  // テキストを返す
   //replyTextMessage($bot, $event->getReplyToken(), "TextMessage");
-  replyImageMessage($bot, $event->getReplyToken(), "https://" . $_SERVER["HTTP_HOST"] . "/imgs/original.jpg", "https://" . $_SERVER["HTTP_HOST"] . "/imgs/preview.jpg");
+  // 画像を返す
+  //replyImageMessage($bot, $event->getReplyToken(), "https://" . $_SERVER["HTTP_HOST"] . "/imgs/original.jpg", "https://" . $_SERVER["HTTP_HOST"] . "/imgs/preview.jpg");
+  // 位置情報を返す
+  replyLocationMessage($bot, $event->getReplyToken(), "エイベックス", "東京都港区六本木1-6-1 泉ガーデンタワー38F", 35.66460959999999, 139.73950260000004);
 
 }
 
@@ -65,6 +69,14 @@ function replyTextMessage($bot, $replyToken, $text) {
 // 画像の送信を行う
 function replyImageMessage($bot, $replyToken, $originalImageUrl, $previewImageUrl) {
   $response = $bot->replyMessage($replyToken, new \LINE\LINEBot\MessageBuilder\ImageMessageBuilder($originalImageUrl, $previewImageUrl));
+  if (!$response->isSucceeded()) {
+    error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
+  }
+}
+
+// 位置情報の送信を行う
+function replyLocationMessage($bot, $replyToken, $title, $address, $lat, $lon) {
+  $response = $bot->replyMessage($replyToken, new \LINE\LINEBot\MessageBuilder\LocationMessageBuilder($title, $address, $lat, $lon));
   if (!$response->isSucceeded()) {
     error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
   }
