@@ -56,7 +56,7 @@ foreach ($events as $event) {
   // 位置情報を返す
   //replyLocationMessage($bot, $event->getReplyToken(), "エイベックス", "東京都港区六本木1-6-1 泉ガーデンタワー38F", 35.66460959999999, 139.73950260000004);
   // スタンプを返す(https://devdocs.line.me/files/sticker_list.pdf)
-  replyStickerMessage($bot, $event->getReplyToken(), 190, 3);
+  replyStickerMessage($bot, $event->getReplyToken(), 1, 1);
 
 }
 
