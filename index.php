@@ -176,7 +176,7 @@ function replyConfirmTemplate($bot, $replyToken, $alternativeText, $text, ...$ac
   );
   $response = $bot->replyMessage($replyToken, $builder);
   if (!$response->isSucceeded()) {
-    error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
+    error_log('Failed!!!!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
   }
 }
 
