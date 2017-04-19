@@ -73,7 +73,7 @@ foreach ($events as $event) {
   );
   */
 
-  
+  /*
   // Buttonsのテンプレートメッセージを返す
   replyButtonsTemplate($bot,
     $event->getReplyToken(),
@@ -88,8 +88,18 @@ foreach ($events as $event) {
     new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder ( // URLを開かせる
       "Webで見る", "https://www.google.co.jp/#q=%E9%80%B1%E6%9C%AB%E3%81%AE%E5%A4%A9%E6%B0%97")
   );
-
-
+*/
+replyConfirmTemplate($bot,
+  $event->getReplyToken(),
+  "Webで詳しく見ますか？",
+  "Webで詳しく見ますか？",
+  new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+    "見る", "http://google.jp"),
+  new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
+    "見ない", "ignore"),
+  new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
+    "非表示", "never")
+  );
 
 }
 
@@ -153,6 +163,19 @@ function replyButtonsTemplate($bot, $replyToken, $alternativeText, $imageUrl, $t
   }
 }
 
-
+function replyConfirmTemplate($bot, $replyToken, $alternativeText, $text, ...$actions) {
+  $actionArray = array();
+  foreach($actions as $value) {
+    array_push($actionArray, $value);
+  }
+  $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+    $alternativeText,
+    new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder ($text, $actionArray)
+  );
+  $response = $bot->replyMessage($replyToken, $builder);
+  if (!$response->isSucceeded()) {
+    error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
+  }
+}
 
 ?>
