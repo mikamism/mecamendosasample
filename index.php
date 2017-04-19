@@ -34,15 +34,30 @@ foreach ($events as $event) {
     error_log('Non text message has come');
     continue;
   }
+
+  /*
   // ReplyTokenへ取得したテキストを返す
   //$bot->replyText($event->getReplyToken(), $event->getText());
+
+  // プロフィール情報を取得
   $profile = $bot->getProfile($event->getUserId())->getJSONDecodedBody();
+  // プロフィールから表示名を取得しメッセージへセット
   $message = $profile["displayName"] . "さん、おはようございます！今日も頑張りましょう！";
+  // 返答内容にテキストとスタンプをセット
   $bot->replyMessage($event->getReplyToken(),
     (new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder())
       ->add(new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message))
       ->add(new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder(1, 114))
   );
-}
+  */
 
- ?>
+  replyTextMessage($bot, $event->getReplyToken(), "TextMessage");
+
+  function replyTextMessage($bot, $replyToken, $text) {
+    $response = $bot->replyMessage($replyToken, new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text));
+    if (!$response->isSucceeded()) {
+      error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
+    }
+  }
+
+?>
