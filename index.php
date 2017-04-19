@@ -70,15 +70,15 @@ foreach ($events as $event) {
   replyButtonsTemplate($bot,
     $event->getReplyToken(),
     "お天気お知らせ - 今日は天気予報は晴れです",
-    "https://" . $_SERVER["HTTP_HOST"] . "/imgs/template.jpg",
+    "https://" . $_SERVER["HTTP_HOST"] . "/imgs/template.jpg", // 画像のサイズは1:1.51
     "お天気お知らせ",
     "今日は天気予報は晴れです",
-    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
+    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ( // ユーザに発現させる（アクションあり）
       "明日の天気", "tomorrow"),
-    new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+    new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (  // 文字列を送信するが表示させない
       "週末の天気", "weekend"),
-    new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-      "Webで見る", "http://google.jp")
+    new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder ( // URLを開かせる
+      "Webで見る", "https://www.google.co.jp/#q=%E9%80%B1%E6%9C%AB%E3%81%AE%E5%A4%A9%E6%B0%97")
   );
 
 }
