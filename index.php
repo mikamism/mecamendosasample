@@ -62,7 +62,7 @@ foreach ($events as $event) {
     new \LINE\LINEBot\MessageBuilder\TextMessageBuilder("TextMessage"),
     new \LINE\LINEBot\MessageBuilder\ImageMessageBuilder("https://" . $_SERVER["HTTP_HOST"] . "/imgs/original.jpg", "https://" . $_SERVER["HTTP_HOST"] . "/imgs/preview.jpg"),
     new \LINE\LINEBot\MessageBuilder\LocationMessageBuilder("エイベックス", "東京都港区六本木1-6-1 泉ガーデンタワー38F", 35.66460959999999, 139.73950260000004),
-    new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder(109, 1)
+    new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder(1, 1)
   );
 
 }
@@ -99,7 +99,7 @@ function replyStickerMessage($bot, $replyToken, $packageId, $stickerId) {
   }
 }
 
-//
+//　複数のメッセージを送信する
 function replyMultiMessage($bot, $replyToken, ...$msgs) {
   $builder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
   foreach($msgs as $value) {
