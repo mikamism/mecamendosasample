@@ -49,7 +49,9 @@ foreach ($events as $event) {
       ->add(new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder(1, 114))
   );
   */
-  replyTextMessage($bot, $event->getReplyToken(), "TextMessage");
+  //replyTextMessage($bot, $event->getReplyToken(), "TextMessage");
+  replyImageMessage($bot, $event->getReplyToken(), "https://" . $_SERVER["HTTP_HOST"] . "/imgs/original.jpg", "https://" . $_SERVER["HTTP_HOST"] . "/imgs/preview.jpg");
+
 }
 
 // テキストの送信を行う
