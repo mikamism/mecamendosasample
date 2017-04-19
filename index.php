@@ -93,7 +93,6 @@ foreach ($events as $event) {
   replyConfirmTemplate($bot,
     $event->getReplyToken(),
     "Webで詳しく見ますか？",
-    "Webで詳しく見ますか？",
     new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
       "見る", "http://google.jp"),
     new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
